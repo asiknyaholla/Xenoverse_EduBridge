@@ -1,0 +1,215 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f6fa;
+  color: #222;
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: white;
+  border-bottom: 2px solid #1a73e8;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #1a73e8;
+  letter-spacing: 1px;
+}
+
+.main-nav a {
+  margin-left: 1.2rem;
+  text-decoration: none;
+  color: #444;
+  font-size: 0.95rem;
+  padding-bottom: 2px;
+}
+
+.main-nav a:hover { color: #1a73e8; }
+
+.main-nav a.active {
+  color: #1a73e8;
+  font-weight: bold;
+  border-bottom: 2px solid #1a73e8;
+}
+
+/* Hero */
+.hero {
+  padding: 3rem 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+  color: white;
+}
+
+.hero-tagline {
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  opacity: 0.85;
+  margin-bottom: 0.8rem;
+}
+
+.hero h1 { font-size: 2rem; margin-bottom: 1rem; }
+
+.hero-subtitle {
+  max-width: 650px;
+  margin: 0 auto;
+  opacity: 0.9;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+/* Section */
+.section {
+  max-width: 960px;
+  margin: 2.5rem auto;
+  padding: 0 1.5rem;
+}
+
+.section h1, .section h2 { margin-bottom: 0.8rem; color: #1a73e8; }
+
+.section p { line-height: 1.7; color: #444; margin-bottom: 0.5rem; }
+
+.section-subtitle { color: #666; margin-bottom: 1.5rem; font-size: 0.95rem; }
+
+/* Card */
+.card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  margin-bottom: 1rem;
+}
+
+/* Subject Grid */
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+}
+
+.subject-card {
+  background: white;
+  padding: 1.2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.subject-card:hover {
+  border-color: #1a73e8;
+  box-shadow: 0 3px 10px rgba(26,115,232,0.15);
+}
+
+.subject-number {
+  display: inline-block;
+  background: #e8f0fe;
+  color: #1a73e8;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+}
+
+.subject-card h3 { font-size: 1.05rem; margin-bottom: 0.4rem; color: #222; }
+.subject-card h2 { font-size: 1.1rem; color: #1a73e8; margin-bottom: 0.6rem; text-align: left; }
+.subject-card p { font-size: 0.85rem; color: #666; line-height: 1.5; margin-bottom: 0.8rem; }
+.subject-card ul { text-align: left; padding-left: 1.2rem; color: #555; font-size: 0.9rem; line-height: 1.8; }
+
+/* Buttons */
+.btn-primary {
+  display: inline-block;
+  background: #1a73e8;
+  color: white;
+  padding: 0.6rem 1.4rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-top: 1.2rem;
+}
+
+.btn-primary:hover { background: #1557b0; }
+
+.btn-secondary {
+  display: inline-block;
+  border: 1px solid #1a73e8;
+  color: #1a73e8;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.btn-secondary:hover { background: #e8f0fe; }
+
+button, .btn {
+  background: #1a73e8;
+  color: white;
+  border: none;
+  padding: 0.55rem 1.2rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+button:hover { background: #1557b0; }
+
+/* Inputs */
+input[type="text"],
+input[type="number"],
+input:not([type]) {
+  width: 100%;
+  margin: 0.4rem 0;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+input:focus { outline: none; border-color: #1a73e8; }
+
+/* Contact */
+.contact a { color: #1a73e8; text-decoration: none; }
+
+/* Center */
+.center { text-align: center; }
+
+/* Footer */
+.site-footer {
+  text-align: center;
+  padding: 1.5rem;
+  background: white;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 3rem;
+  color: #666;
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+
+.about p { margin-bottom: 0.8rem; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .site-header { flex-direction: column; gap: 0.7rem; }
+  .main-nav a { margin-left: 0.6rem; }
+  .hero h1 { font-size: 1.4rem; }
+  .subject-grid { grid-template-columns: 1fr 1fr; }
+}

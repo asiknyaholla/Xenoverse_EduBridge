@@ -3,66 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <title>EduBridge – Resources</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="logo">EduBridge</div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="resources.html" class="active">Resources</a>
+    </nav>
+  </header>
 
-<header class="site-header">
-  <div class="logo">EduBridge</div>
-  <nav class="main-nav">
-    <a href="/">Home</a>
-    <a href="/resources" class="active">Resources</a>
-    <a href="book-online.html">Book Online</a>
-    <a href="program-list.html" class="active">Program List</a>
-    <a href="notifications.html">Notifications</a>
-  </nav>
-</header>
+  <!-- Subject Library -->
+  <section class="section">
+    <h1>Explore Our Subject Library</h1>
+    <p class="section-subtitle">
+      Access a curated collection of resources, videos and notes for each subject.
+      Click on a folder to open the Google Drive resources.
+    </p>
 
-<section class="section">
-  <h1>Subject Resources</h1>
-  <div class="subject-grid">
+    <div class="subject-grid">
+      <!-- 01 English -->
+      <div class="subject-card">
+        <span class="subject-number">01</span>
+        <h3>English</h3>
+        <p>Strengthen English grammar, vocabulary and comprehension with exam-style practice.</p>
+        <a
+          class="btn-secondary"
+          href="https://drive.google.com/drive/folders/1-mubY_oLWp_xElXIOWM48Fb8S7-5BXtx?usp=drive_link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Explore Folder
+        </a>
+      </div>
 
-    <div class="subject-card">
-      <h3>English</h3>
-      <a class="btn" href="https://drive.google.com/">Open</a>
+      <!-- 02 Kannada -->
+      <div class="subject-card">
+        <span class="subject-number">02</span>
+        <h3>Kannada</h3>
+        <p>Learn Kannada reading, writing and grammar with simple, real-life examples.</p>
+        <a
+          class="btn-secondary"
+          href="https://drive.google.com/drive/folders/1wvXv7bNHUiiMqP3z59a8QyfjNPkqogQB?usp=drive_link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Explore Folder
+        </a>
+      </div>
+
+      <!-- 03 Math -->
+      <div class="subject-card">
+        <span class="subject-number">03</span>
+        <h3>Math</h3>
+        <p>Practice 10th standard Math concepts with step-by-step explanations.</p>
+        <a
+          class="btn-secondary"
+          href="https://drive.google.com/drive/folders/13HSIeu8RK1YSzpfK2t19vJyGMmoYSGb2?usp=drive_link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Explore Folder
+        </a>
+      </div>
+
+      <!-- 04 Science -->
+      <div class="subject-card">
+        <span class="subject-number">04</span>
+        <h3>Science</h3>
+        <p>Understand key Science concepts through clear, visual lessons and examples.</p>
+        <a
+          class="btn-secondary"
+          href="https://drive.google.com/drive/folders/1fMT1sRS61QM3W3Pw3Iw5W0cnTSM3k2Pk?usp=drive_link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Explore Folder
+        </a>
+      </div>
+
+      <!-- 05 Social Science -->
+      <div class="subject-card">
+        <span class="subject-number">05</span>
+        <h3>Social Science</h3>
+        <p>Explore history, civics and geography in easy language.</p>
+        <a
+          class="btn-secondary"
+          href="https://drive.google.com/drive/folders/1eDrTjZLV6qUaBCGiloA_WpEE_Et0Sf9u?usp=drive_link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Explore Folder
+        </a>
+      </div>
+
+      <!-- 06 Sanskrit -->
+      <div class="subject-card">
+        <span class="subject-number">06</span>
+        <h3>Sanskrit</h3>
+        <p>Build a strong base in Sanskrit grammar, vocabulary and exam-focused questions.</p>
+        <a
+          class="btn-secondary"
+          href="https://drive.google.com/drive/folders/1-WH6N2WFn8TXlRQStm1NPwgb4F9SCfve?usp=drive_link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Explore Folder
+        </a>
+      </div>
+
+      <!-- 07 Hindi -->
+      <div class="subject-card">
+        <span class="subject-number">07</span>
+        <h3>Hindi</h3>
+        <p>Improve your Hindi reading, writing and grammar for board exam success.</p>
+        <a
+          class="btn-secondary"
+          href="https://drive.google.com/drive/folders/1TjhXM5kKHR4yy3jcH6L2q4csg4lhmrPK?usp=drive_link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Explore Folder
+        </a>
+      </div>
     </div>
+  </section>
 
-    <div class="subject-card">
-      <h3>Kannada</h3>
-      <a class="btn" href="https://drive.google.com/">Open</a>
-    </div>
+  <!-- Video Lessons (placeholder) -->
+  <section class="section">
+    <h2>Featured Video Lessons</h2>
+    <p>
+      Here you can later embed YouTube or other video players for key lessons in each subject.
+    </p>
+  </section>
 
-    <div class="subject-card">
-      <h3>Math</h3>
-      <a class="btn" href="https://drive.google.com/">Open</a>
-    </div>
-
-    <div class="subject-card">
-      <h3>Science</h3>
-      <a class="btn" href="https://drive.google.com/">Open</a>
-    </div>
-
-    <div class="subject-card">
-      <h3>Social Science</h3>
-      <a class="btn" href="https://drive.google.com/">Open</a>
-    </div>
-
-    <div class="subject-card">
-      <h3>Hindi</h3>
-      <a class="btn" href="https://drive.google.com/">Open</a>
-    </div>
-
-    <div class="subject-card">
-      <h3>Sanskrit</h3>
-      <a class="btn" href="https://drive.google.com/">Open</a>
-    </div>
-
-  </div>
-</section>
-
-<footer class="site-footer">
-  <p>© 2026 EduBridge</p>
-</footer>
-
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>Empowering rural Karnataka students with smart learning access.</p>
+    <p>© 2026 EduBridge. All rights reserved.</p>
+  </footer>
 </body>
 </html>
