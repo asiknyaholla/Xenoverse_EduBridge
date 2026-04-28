@@ -1,0 +1,98 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: none !important;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f6fa;
+  color: #222;
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background: white;
+  border-bottom: 1px solid #ddd;
+}
+
+.logo {
+  font-weight: bold;
+  color: #1a73e8;
+}
+
+.main-nav a {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: #333;
+}
+
+/* Hero */
+.hero {
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Section */
+.section {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+/* Inputs */
+input {
+  width: 100%;
+  margin: 0.4rem 0;
+  padding: 0.5rem;
+}
+
+/* Buttons */
+button, .btn {
+  background: #1a73e8;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+/* Grid */
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.subject-card {
+  background: white;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+/* Footer */
+.site-footer {
+  text-align: center;
+  padding: 1rem;
+  background: white;
+  margin-top: 2rem;
+}
+
+/* Low bandwidth */
+img {
+  display: none;
+}
+
