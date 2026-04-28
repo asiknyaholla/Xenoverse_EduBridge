@@ -68,7 +68,7 @@ if __name__ == "__main__":
         # This is where the magic happens: it asks YOU for the input
         user_prompt = input("\nWhat would you like to study or find? (Type 'exit' to stop): ")
 
-        if user_prompt.lower() == 'exit':
+        if user_prompt.lower() == 'exit' or user_prompt.lower() == 'stop':
             print("Goodbye! Good luck with your project.")
             break
 
