@@ -28,10 +28,14 @@
 
 ---
 
-## Testing & Debugging
+## 9.00pm to 11.00pm
 - Fixing import errors
-- Testing APIs
 - Improving chatbot responses
+
+---
+
+## Testing & Debugging
+- Testing APIs
 -  Added marks input system 
 -  Improved UI for low bandwidth
 
