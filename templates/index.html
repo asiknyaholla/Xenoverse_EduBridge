@@ -1,139 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>EduBridge – Smart Learning</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <meta charset="UTF-8">
+    <title>EduBridge</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
-<header class="site-header">
-  <div class="logo">EduBridge</div>
-  <nav class="main-nav">
-    <a href="/" class="active">Home</a>
-    <a href="/resources">Resources</a>
-    <a href="book-online.html">Book Online</a>
-    <a href="program-list.html" class="active">Program List</a>
-    <a href="notifications.html">Notifications</a>
-  </nav>
+<header>
+    <h1>📚 EduBridge</h1>
+    <p>Smart Learning for Rural Students</p>
 </header>
 
-<section class="hero">
-  <h1>Smart Learning for Rural Students</h1>
-  <p>Learn in your language, track progress, and improve with guidance.</p>
+<nav>
+    <button onclick="showSection('resources')">Resources</button>
+    <button onclick="showSection('recommend')">Study Plan</button>
+    <button onclick="showSection('scholarships')">Scholarships</button>
+    <button onclick="showSection('chat')">EduBot</button>
+</nav>
+
+<!-- RESOURCES -->
+<section id="resources" class="section active">
+    <h2>📚 Subjects</h2>
+    <div id="subjects">
+        {% for key, sub in resources.items() %}
+            <button onclick="loadResources('{{key}}')">{{sub.name}}</button>
+        {% endfor %}
+    </div>
+    <div id="resourceData"></div>
 </section>
 
-<!-- LANGUAGE -->
-<div class="section center">
-  <button onclick="setLanguage('en')">English</button>
-  <button onclick="setLanguage('kn')">Kannada</button>
-  <button onclick="setLanguage('hi')">Hindi</button>
-</div>
-
-<!-- CHATBOT -->
-<section class="section">
-  <h2>AI Study Assistant</h2>
-  <div class="card">
-    <input id="input" placeholder="Ask something..." />
-    <button onclick="sendMessage()">Send</button>
-    <p id="reply"></p>
-    <button onclick="speakText()">🔊 Speak</button>
-  </div>
+<!-- RECOMMENDATION -->
+<section id="recommend" class="section">
+    <h2>📊 Enter Marks</h2>
+    <form id="marksForm">
+        {% for sub in resources.keys() %}
+            <label>{{sub}}:</label>
+            <input type="number" name="{{sub}}" min="0" max="100"><br>
+        {% endfor %}
+        <button type="submit">Get Plan</button>
+    </form>
+    <div id="result"></div>
 </section>
 
-<!-- MARKS -->
-<section class="section">
-  <h2>Personalized Learning</h2>
-  <div class="card">
-    <input id="kannada" placeholder="Kannada marks">
-    <input id="english" placeholder="English marks">
-    <input id="math" placeholder="Math marks">
-    <input id="science" placeholder="Science marks">
-    <input id="social" placeholder="Social Science marks">
-    <input id="hindi" placeholder="Hindi marks">
-    <input id="sanskrit" placeholder="Sanskrit marks">
-
-    <button onclick="getPlan()">Analyze</button>
-    <p id="plan"></p>
-  </div>
-
-  <canvas id="chart"></canvas>
+<!-- SCHOLARSHIPS -->
+<section id="scholarships" class="section">
+    <h2>🎓 Scholarships</h2>
+    <ul>
+        {% for s in scholarships %}
+        <li>
+            <b>{{s.name}}</b><br>
+            {{s.desc}}<br>
+            💰 {{s.amount}}<br>
+            <a href="{{s.url}}" target="_blank">Apply</a>
+        </li>
+        {% endfor %}
+    </ul>
 </section>
 
-<footer class="site-footer">
-  <p>© 2026 EduBridge | Empowering Rural Students</p>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- CHAT -->
+<section id="chat" class="section">
+    <h2>🤖 EduBot</h2>
+    <div id="chatBox"></div>
+    <input type="text" id="msg" placeholder="Ask something...">
+    <button onclick="sendMsg()">Send</button>
+</section>
 
 <script>
-let currentLang = "en";
-
-// Chat
-function sendMessage() {
-  let msg = document.getElementById("input").value;
-
-  fetch('/api/chat', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({message: msg, lang: currentLang})
-  })
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("reply").innerText = data.reply;
-  });
+function showSection(id){
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
 }
 
-// TTS
-function speakText() {
-  let text = document.getElementById("reply").innerText;
-  let speech = new SpeechSynthesisUtterance(text);
-  speech.lang = currentLang === "kn" ? "kn-IN" :
-                currentLang === "hi" ? "hi-IN" : "en-US";
-  window.speechSynthesis.speak(speech);
+function loadResources(subject){
+    fetch('/api/resources/' + subject)
+    .then(res => res.json())
+    .then(data => {
+        let html = "<h3>" + data.name + "</h3>";
+
+        html += "<b>Textbooks:</b><ul>";
+        data.textbooks.forEach(t => {
+            html += `<li><a href="${t.url}" target="_blank">${t.title}</a></li>`;
+        });
+        html += "</ul>";
+
+        html += "<b>Question Papers:</b><ul>";
+        data.question_papers.forEach(q => {
+            html += `<li><a href="${q.url}" target="_blank">${q.title}</a></li>`;
+        });
+        html += "</ul>";
+
+        document.getElementById("resourceData").innerHTML = html;
+    });
 }
 
-// Language
-function setLanguage(lang){
-  currentLang = lang;
-}
+document.getElementById("marksForm").onsubmit = function(e){
+    e.preventDefault();
+    let data = {};
+    let inputs = this.elements;
 
-// Recommendation
-function getPlan(){
-  let data = {
-    kannada: document.getElementById("kannada").value,
-    english: document.getElementById("english").value,
-    math: document.getElementById("math").value,
-    science: document.getElementById("science").value,
-    social: document.getElementById("social").value,
-    hindi: document.getElementById("hindi").value,
-    sanskrit: document.getElementById("sanskrit").value
-  };
-
-  fetch('/api/recommend', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
-  })
-  .then(res => res.json())
-  .then(res => {
-    document.getElementById("plan").innerText = res.advice.join(", ");
-    drawChart(data);
-  });
-}
-
-// Graph
-function drawChart(data){
-  new Chart(document.getElementById("chart"), {
-    type: 'bar',
-    data: {
-      labels: Object.keys(data),
-      datasets: [{
-        label: "Marks",
-        data: Object.values(data)
-      }]
+    for(let i=0;i<inputs.length;i++){
+        if(inputs[i].name){
+            data[inputs[i].name] = inputs[i].value || 0;
+        }
     }
-  });
+
+    fetch('/api/recommendation',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({marks:data})
+    })
+    .then(res=>res.json())
+    .then(res=>{
+        let html="";
+        for(let sub in res){
+            html += `<p><b>${sub}</b>: ${res[sub].message}</p>`;
+        }
+        document.getElementById("result").innerHTML = html;
+    });
+}
+
+function sendMsg(){
+    let msg = document.getElementById("msg").value;
+
+    fetch('/api/chat',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({message:msg})
+    })
+    .then(res=>res.json())
+    .then(res=>{
+        document.getElementById("chatBox").innerHTML += 
+        "<p><b>You:</b> "+msg+"</p><p><b>Bot:</b> "+res.reply+"</p>";
+    });
+
+    document.getElementById("msg").value="";
 }
 </script>
 
