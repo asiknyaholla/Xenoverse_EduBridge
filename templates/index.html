@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EduBridge – Smart Learning</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">EduBridge</div>
+  <nav class="main-nav">
+    <a href="/" class="active">Home</a>
+    <a href="/resources">Resources</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Smart Learning for Rural Students</h1>
+  <p>Learn in your language, track progress, and improve with guidance.</p>
+</section>
+
+<!-- LANGUAGE -->
+<div class="section center">
+  <button onclick="setLanguage('en')">English</button>
+  <button onclick="setLanguage('kn')">Kannada</button>
+  <button onclick="setLanguage('hi')">Hindi</button>
+</div>
+
+<!-- CHATBOT -->
+<section class="section">
+  <h2>AI Study Assistant</h2>
+  <div class="card">
+    <input id="input" placeholder="Ask something..." />
+    <button onclick="sendMessage()">Send</button>
+    <p id="reply"></p>
+    <button onclick="speakText()">🔊 Speak</button>
+  </div>
+</section>
+
+<!-- MARKS -->
+<section class="section">
+  <h2>Personalized Learning</h2>
+  <div class="card">
+    <input id="kannada" placeholder="Kannada marks">
+    <input id="english" placeholder="English marks">
+    <input id="math" placeholder="Math marks">
+    <input id="science" placeholder="Science marks">
+    <input id="social" placeholder="Social Science marks">
+    <input id="hindi" placeholder="Hindi marks">
+    <input id="sanskrit" placeholder="Sanskrit marks">
+
+    <button onclick="getPlan()">Analyze</button>
+    <p id="plan"></p>
+  </div>
+
+  <canvas id="chart"></canvas>
+</section>
+
+<footer class="site-footer">
+  <p>© 2026 EduBridge | Empowering Rural Students</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+let currentLang = "en";
+
+// Chat
+function sendMessage() {
+  let msg = document.getElementById("input").value;
+
+  fetch('/api/chat', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({message: msg, lang: currentLang})
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("reply").innerText = data.reply;
+  });
+}
+
+// TTS
+function speakText() {
+  let text = document.getElementById("reply").innerText;
+  let speech = new SpeechSynthesisUtterance(text);
+  speech.lang = currentLang === "kn" ? "kn-IN" :
+                currentLang === "hi" ? "hi-IN" : "en-US";
+  window.speechSynthesis.speak(speech);
+}
+
+// Language
+function setLanguage(lang){
+  currentLang = lang;
+}
+
+// Recommendation
+function getPlan(){
+  let data = {
+    kannada: document.getElementById("kannada").value,
+    english: document.getElementById("english").value,
+    math: document.getElementById("math").value,
+    science: document.getElementById("science").value,
+    social: document.getElementById("social").value,
+    hindi: document.getElementById("hindi").value,
+    sanskrit: document.getElementById("sanskrit").value
+  };
+
+  fetch('/api/recommend', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(res => {
+    document.getElementById("plan").innerText = res.advice.join(", ");
+    drawChart(data);
+  });
+}
+
+// Graph
+function drawChart(data){
+  new Chart(document.getElementById("chart"), {
+    type: 'bar',
+    data: {
+      labels: Object.keys(data),
+      datasets: [{
+        label: "Marks",
+        data: Object.values(data)
+      }]
+    }
+  });
+}
+</script>
+
+</body>
+</html>
