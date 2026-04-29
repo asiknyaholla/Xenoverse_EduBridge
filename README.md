@@ -36,7 +36,7 @@ EduBridge offers a **lightweight and student-friendly platform** where learners 
 ---
 
 ### 📊 2. Flexible Study Plans (Student Choice)
-- Multiple **pre-designed study plans** available:
+- Multiple **pre-designed study plans** available
 - Students can **choose a plan based on their needs**
 - Encourages self-paced learning
 
