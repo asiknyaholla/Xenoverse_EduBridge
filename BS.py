@@ -1,38 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 import json, os, re
-from pathlib import Path
-from dotenv import load_dotenv
-
-# AI and Tool Imports
-from langchain_openai import ChatOpenAI
-from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_core.tools import tool
-from langchain_community.tools import DuckDuckGoSearchRun
 
 app = Flask(__name__)
 
-# ── SETUP SECURITY & AI ──────────────────────────────────────────
-load_dotenv()
-api_key = os.getenv("OPENAI_API_KEY")
-
-# Initialize the AI
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0, openai_api_key=api_key)
-search_tool = DuckDuckGoSearchRun()
-
-@tool
-def find_local_notes(topic: str):
-    """Searches the computer for a folder matching the user's specific topic."""
-    base_path = Path.cwd()
-    for root, dirs, files in os.walk(base_path):
-        for d in dirs:
-            if topic.lower() in d.lower():
-                return f"MATCH: Found your local folder for '{topic}' at: {os.path.join(root, d)}"
-    return f"No local notes found for '{topic}' in the project directory."
-
-tools = [search_tool, find_local_notes]
-llm_with_tools = llm.bind_tools(tools)
-
-# ── SUBJECT RESOURCES DATA ─────────────────────────────────────────
+# ── SUBJECT RESOURCES DATA (from app.py) ─────────────────────────────
 SUBJECTS = ["kannada", "hindi", "sanskrit", "english", "maths", "science", "social_science"]
 
 RESOURCES = {
@@ -151,12 +122,41 @@ RESOURCES = {
 }
 
 SCHOLARSHIPS = [
-    {"name": "NSP – National Scholarship Portal", "url": "https://scholarships.gov.in/", "desc": "Central govt scholarships for students", "amount": "Up to ₹25,000/year"},
+    {"name": "NSP – National Scholarship Portal", "url": "https://scholarships.gov.in/", "desc": "Central govt scholarships for SC/ST/OBC/Minority/EWS students", "amount": "Up to ₹25,000/year"},
     {"name": "Karnataka Rajyotsava Scholarship", "url": "https://scholarships.gov.in/", "desc": "For Karnataka domicile students with merit", "amount": "₹5,000 – ₹15,000"},
-    {"name": "PM YASASVI Scheme", "url": "https://yet.nta.ac.in/", "desc": "For OBC, EBC & DNT students", "amount": "₹75,000 – ₹1,25,000/year"},
+    {"name": "PM YASASVI Scheme", "url": "https://yet.nta.ac.in/", "desc": "For OBC, EBC & DNT students in Class 9 & 11", "amount": "₹75,000 – ₹1,25,000/year"},
+    {"name": "Prerana Scholarship – Karnataka", "url": "https://ssp.postmatric.karnataka.gov.in/", "desc": "Post-matric scholarship for SC/ST students in Karnataka", "amount": "Up to ₹12,000/year"},
 ]
 
-# ── ROUTES ───────────────────────────────────────────────────────
+# ── HELPER FUNCTIONS ─────────────────────────────
+def get_recommendation(subject, marks):
+    if marks >= 85:
+        level = "advanced"
+        msg = "Excellent! You're performing brilliantly. Focus on challenging problems and olympiad preparation."
+        tasks = ["Solve HOTS (Higher Order Thinking) questions", "Attempt previous year board papers", "Explore advanced topics beyond syllabus", "Mentor peers to strengthen your own understanding"]
+        color = "#2d6a4f"
+        emoji = "🌟"
+    elif marks >= 65:
+        level = "intermediate"
+        msg = "Good work! A little more practice and you'll master this subject."
+        tasks = ["Revise weak chapters identified in tests", "Practice 15 questions daily", "Make summary notes for revision", "Take chapter-wise mock tests"]
+        color = "#e8a020"
+        emoji = "📈"
+    elif marks >= 40:
+        level = "basic"
+        msg = "You're on the right track. Let's build a strong foundation together."
+        tasks = ["Re-read NCERT chapters carefully", "Watch video explanations for concepts", "Solve 5 basic problems daily", "Ask your teacher for extra help on weak topics"]
+        color = "#e85d04"
+        emoji = "💪"
+    else:
+        level = "foundation"
+        msg = "Don't worry! With consistent effort you can improve greatly. Start from basics."
+        tasks = ["Start from Chapter 1 – read slowly and take notes", "Watch simple YouTube explanations", "Practice 3 basic problems every day", "Talk to your teacher about a study plan"]
+        color = "#c1121f"
+        emoji = "🌱"
+    return {"level": level, "message": msg, "tasks": tasks, "color": color, "emoji": emoji}
+
+# ── PAGE ROUTES ─────────────────────
 @app.route('/')
 @app.route('/index.html')
 def index():
@@ -166,32 +166,85 @@ def index():
 def resources():
     return render_template('resources.html', resources=RESOURCES)
 
-@app.route('/api/ai_chat', methods=['POST'])
-def ai_chat():
+@app.route('/book-online.html')
+def book_online():
+    return render_template('book-online.html')
+
+@app.route('/program-list.html')
+def program_list():
+    return render_template('program-list.html')
+
+@app.route('/notifications.html')
+def notifications():
+    return render_template('notifications.html')
+
+# ── API ROUTES ─────────────
+
+@app.route('/api/chat', methods=['POST'])
+def chat():
     data = request.get_json()
-    user_query = data.get("message", "")
+    msg = data.get("message", "").lower().strip()
+    lang = data.get("lang", "en")
     
-    messages = [
-        SystemMessage(content="You are a helpful Karnataka Board study assistant. Use find_local_notes for local files and duckduckgo_search for web links."),
-        HumanMessage(content=user_query)
-    ]
+    responses_en = {
+        "scholarship": "Great question! Here are scholarships for you:\n• NSP (scholarships.gov.in)\n• PM YASASVI Scheme\n• Karnataka Rajyotsava Scholarship\n\nVisit the Scholarships section for details! 🎓",
+        "study": "Here's a good study plan:\n✅ Study 4-5 hours daily\n✅ Take 10-min breaks every hour\n✅ Revise previous topics on weekends\n✅ Use NCERT textbooks as your base",
+        "career": "Career paths after 10th:\n🔬 Science → Doctor, Engineer\n💼 Commerce → CA, Banking\n📚 Arts → Teacher, Lawyer, Civil Services",
+        "maths": "For Maths: Practice daily, master NCERT examples first, learn formulas by writing them.",
+        "science": "For Science: Understand concepts, draw diagrams, learn equations, connect to real life.",
+        "english": "For English: Read daily, write paragraphs, speak English regularly.",
+        "hello": "Hello! I'm EduBot, your learning assistant. Ask me about scholarships, study tips, or careers!",
+        "help": "I can help with study tips, scholarships, career guidance, and subject advice.",
+        "default": "That's a great question! Try asking about 'scholarships', 'study plan', 'maths improvement', or 'career after 10th'."
+    }
     
-    try:
-        ai_msg = llm_with_tools.invoke(messages)
-        if ai_msg.tool_calls:
-            messages.append(ai_msg)
-            for tool_call in ai_msg.tool_calls:
-                tool_map = {"duckduckgo_search": search_tool, "find_local_notes": find_local_notes}
-                selected_tool = tool_map[tool_call["name"]]
-                result = selected_tool.invoke(tool_call["args"])
-                messages.append({"role": "tool", "tool_call_id": tool_call["id"], "content": str(result)})
-            
-            final_answer = llm_with_tools.invoke(messages)
-            return jsonify({"reply": final_answer.content})
-        
-        return jsonify({"reply": ai_msg.content})
-    except Exception as e:
-        return jsonify({"reply": f"An error occurred: {str(e)}"}), 500
+    responses_kn = {
+        "scholarship": "ವಿದ್ಯಾರ್ಥಿ ವೇತನಗಳು:\n• NSP\n• PM YASASVI\n• ಕರ್ನಾಟಕ ರಾಜ್ಯೋತ್ಸವ ಶಿಷ್ಯವೇತನ\n\nScholarships ವಿಭಾಗವನ್ನು ನೋಡಿ! 🎓",
+        "study": "ಅಧ್ಯಯನ ಯೋಜನೆ:\n✅ ದಿನಕ್ಕೆ 4-5 ಗಂಟೆ ಓದಿ\n✅ NCERT ಪುಸ್ತಕಗಳನ್ನು ಬಳಸಿ",
+        "hello": "ನಮಸ್ಕಾರ! ನಾನು EduBot. ವಿದ್ಯಾರ್ಥಿ ವೇತನ, ಅಧ್ಯಯನ ಸಲಹೆ ಬಗ್ಗೆ ಕೇಳಿ.",
+        "default": "ದಯವಿಟ್ಟು ಪ್ರಶ್ನೆ ಸ್ಪಷ್ಟಪಡಿಸಿ."
+    }
+    
+    responses = responses_kn if lang == "kn" else responses_en
+    reply = responses["default"]
+    for key in responses:
+        if key in msg:
+            reply = responses[key]
+            break
+    
+    return jsonify({"reply": reply})
+
+@app.route('/api/recommend', methods=['POST'])
+def recommend():
+    data = request.get_json() or {}
+    results = {}
+    
+    for subject, marks in data.items():
+        if subject in ["kannada", "hindi", "sanskrit", "english", "maths", "science", "social_science"]:
+            try:
+                results[subject] = get_recommendation(subject, int(marks))
+            except:
+                results[subject] = {"error": "Invalid marks"}
+    
+    # Backward compatibility for old frontend keys
+    subject_map = {
+        'math': 'maths',
+        'social': 'social_science'
+    }
+    for old_key, new_key in subject_map.items():
+        if old_key in data and new_key not in results:
+            try:
+                results[new_key] = get_recommendation(new_key, int(data[old_key]))
+            except:
+                pass
+    
+    return jsonify(results)
+
+@app.route('/api/resources/<subject>')
+def get_resources(subject):
+    if subject in RESOURCES:
+        return jsonify(RESOURCES[subject])
+    return jsonify({"error": "Subject not found"}), 404
 
 @app.route('/api/scholarships')
 def scholarships():
