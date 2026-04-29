@@ -1,164 +1,113 @@
-## Readme
-# 🎓 EduBridge – Smart Learning Access Platform for Rural Students
+# 🌉 EduBridge – Smart Learning Platform for Rural Students
 
-## 🌟 Overview
-**EduBridge** is a lightweight web platform built using Python and Flask to help rural students access quality education in a simple, accessible, and low-bandwidth way.
-
-It solves key challenges:
-- Lack of learning resources  
-- No personalized guidance  
-- Language barriers  
-- Limited awareness of study strategies  
+EduBridge is a web-based learning platform designed to **bridge the education gap for rural students** by providing accessible resources, flexible study plans, and guided learning support.
 
 ---
 
-## 🚀 Features
+## 📌 Problem Statement
 
-### 🤖 AI Study Assistant (Chatbot)
-- Answers student queries
-- Gives subject-wise study tips
-- Works offline (low bandwidth)
+Students in rural areas often face:
 
-### 🌐 Language Toggle
-Supports:
-- English  
-- Kannada  
-- Hindi  
-
-### 📊 Personalized Learning Plan
-- Input subject-wise marks  
-- Detects weak & strong subjects  
-- Suggests improvement strategy  
-
-### 📈 Performance Graph
-- Visualize marks using charts (Chart.js)
-
-### 🔊 Text-to-Speech
-- Converts chatbot replies into speech  
-- Helps students with reading difficulty  
-
-### 📚 Subject Resources
-Includes:
-- Kannada  
-- Hindi  
-- Sanskrit  
-- English  
-- Mathematics  
-- Science  
-- Social Science  
+- 📚 Limited access to quality study materials  
+- 🧭 Lack of structured study plans   
+- 🎓 Difficulty connecting with mentors or tutors  
 
 ---
 
-## 🧠 Tech Stack
+## 🚀 Solution
 
-- Backend: Python (Flask)  
-- Frontend: HTML, CSS, JavaScript  
-- Charts: Chart.js  
-- Speech: Web Speech API  
+EduBridge offers a **lightweight and student-friendly platform** where learners can access resources, choose their own study plans, and receive guidance.
 
 ---
 
-## 📁 Project Structure
-edubridge/
-│── app.py
-│
-├── services/
-│ ├── init.py
-│ ├── chatbot.py
-│ ├── recommender.py
-│ ├── translator.py
+## ✨ Features
+
+### 📚 1. Learning Resources
+- Subject-wise materials:
+  - Kannada  
+  - English  
+  - Hindi / Sanskrit  
+  - Science  
+  - Maths  
+  - Social Science  
+- Includes notes, textbooks, and previous question papers  
+- Designed for low-bandwidth usage  
+
+---
+
+### 📊 2. Flexible Study Plans (Student Choice)
+- Multiple **pre-designed study plans** available:
+- Students can **choose a plan based on their needs**
+- Encourages self-paced learning
+
+---
+
+### 📅 3. Book Online Sessions
+- Students can schedule sessions with mentors/teachers  
+- Helps in doubt solving and concept clarity  
+- Simple and easy booking interface  
+
+---
+
+### 🔔 4. Notifications Tab
+- Alerts for:
+  - Upcoming sessions  
+  - Study reminders  
+  - Newly added resources  
+- Keeps students consistent and engaged  
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend:** Python (Flask)  
+- **Frontend:** HTML, CSS  
+
+---
+
+## 📂 Project Structure
+
+
+EduBridge/
+│──BS.py
 │
 ├── templates/
+│ ├── BS.html
+│ ├── book-online.html
 │ ├── index.html
+│ ├── notifications.html
+│ ├── program-list.html
 │ ├── resources.html
 │
 ├── static/
-│ ├── styles.css
-│ ├── app.js
-
-## ⚙️ Setup Instructions
-
-### 1. Clone Repository
-
-git clone https://github.com/your-username/edubridge.git
-
-cd edubridge
+│ ├── style.css
+│
+│──dataset_link.txt
+│──progress.md
+└── README.md
 
 
-### 2. Create Virtual Environment
 
+---
+
+## ⚙️ Installation & Setup
+
+###
+1. Create virtual environment
 python -m venv venv
+
+2. Activate virtual environment
+Windows:
 venv\Scripts\activate
+Mac/Linux:
+source venv/bin/activate
 
-
-### 3. Install Dependencies
-
+3. Install dependencies
 pip install flask
 
-
-### 4. Run Application
-
+4. Run the app
 python app.py
 
+5. Open in browser
+http://127.0.0.1:5000/
 
-### 5. Open Browser
-
-http://127.0.0.1:5000
-
-
----
-
-## 📶 Low Bandwidth Optimization
-- Minimal UI design  
-- No heavy images  
-- Offline chatbot logic  
-- Browser-based text-to-speech  
-
----
-
-## 🎯 Target Users
-- Rural students (SSLC / Class 10)
-- Students with limited internet access
-- Learners needing simple explanations
-
----
-
-## 🏆 Hackathon Highlights
-
-### 💡 Innovation
-- Combines chatbot + learning + analytics  
-- Works in low-resource environments  
-
-### 🌍 Social Impact
-- Bridges rural education gap  
-- Promotes inclusive learning  
-
-### ⚡ Scalability
-- Can expand to:
-  - AI tutor
-  - Scholarships
-  - Student accounts  
-
----
-
-## 🔮 Future Scope
-- 🎙 Speech-to-text input  
-- 📱 Mobile app  
-- 🧑‍🎓 Student dashboards  
-- 🌐 Full multilingual support  
-- 🤖 Advanced AI chatbot  
-
----
-
-## 👨‍💻 Developed For
-Hackathon Project – Education + Accessibility + AI
-
----
-
-## 📜 License
-For educational and hackathon use only.
-
----
-
-## ✨ Tagline
-**Empowering Rural Students with Smart Learning**
