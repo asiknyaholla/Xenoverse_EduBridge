@@ -1,61 +1,94 @@
-# EduBridge Project Progress
+# 📊 EduBridge – Hourly Progress Report
 
-## 12.00pm to 2.00pm
-- Finalized problem statement
-- Decided features (chatbot, language toggle, recommendations)
-- Designed basic UI layout
-
----
-
-## 2.00pm to 4.00pm
-- Created index.html
-- Created resources.html
-- Designed UI using CSS
-- Added subject resource links
+## 🕒 Time Duration  
+**Start:** 28-04-2026 | 12:00 PM  
+**End:** 29-04-2026 | 09:00 AM  
 
 ---
 
-## 4.00pm to 7.00pm
-- Set up Flask app
-- Created chatbot module
-- Created recommendation system
-- Integrated frontend with backend
+## ⏱️ Hourly Development Log
+
+### 📅 28-04-2026
+
+**12:00 PM – 01:00 PM**
+- Project idea finalization (EduBridge concept)
+- Defined core features: resources, study plans, booking, notifications
+- Initialized Flask project setup
+
+**01:00 PM – 02:00 PM**
+- Created folder structure (templates, static, database)
+- Set up virtual environment
+- Installed Flask dependencies
+
+**02:00 PM – 03:00 PM**
+- Built basic Flask app (BS.py)
+- Created initial routes (index,resources)
+
+**03:00 PM – 04:00 PM**
+- Designed UI wireframe for home
+- Started HTML template structure
+
+**04:00 PM – 05:00 PM**
+- Collected dataset links
+- Stored links in google drive
+  
+**05:00 PM – 06:00 PM**
+- Built web layout
+- Added navigation for Resources, Study Plan, Booking
+
+**06:00 PM – 07:00 PM**
+- Implemented Learning Resources section
+- Added subject categories
+
+**07:00 PM – 08:00 PM**
+- Designed Study Plan feature 
+
+**08:00 PM – 09:00 PM**
+- Improved UI styling for readability
+
+**09:00 PM – 10:00 PM**
+- Started Online Session Booking module
+- Created basic booking form
+
+**10:00 PM – 12:00 AM**
+- Added Notifications tab UI
+- Designed layout for alerts and updates
 
 ---
 
-## 7.00 pm -9.00 pm
--  Added chatbot UI
+### 📅 29-04-2026
+
+**12:00 AM – 01:00 AM**
+- Connected backend routes with templates
+- Fixed navigation linking issues
+
+**01:00 AM – 02:00 AM**
+- Debugged Jinja2 template errors
+- Fixed undefined variable issues
+- Fixed UI responsiveness issues
+
+**04:00 AM – 06:00 AM**
+- Enhanced CSS for low-bandwidth optimization
+- Simplified layout design
+- Debugging Flask routing issues
+- Improved page rendering stability
+
+**06:00 AM – 08:00 AM**
+- Integrated resource + study plan + booking modules
+- Verified navigation flow
+- Final UI polishing
+
+**08:00 AM – 08:45 AM**
+- Final testing of full application
+- Prepared project for GitHub submission
+- Wrote documentation files (README + progress log)
 
 ---
 
-## 9.00pm to 11.00pm
-- Fixing import errors
-- Improving chatbot responses
+## 📌 Summary
+- Core modules successfully built and integrated
+- UI completed with low-bandwidth optimization
+- Backend routes functioning correctly
+- Project ready for demo and deployment
 
 ---
-
-## Testing & Debugging
-- Testing APIs
--  Added marks input system 
--  Improved UI for low bandwidth
-
----
-
-## Pending Tasks
-- Add language toggle
-- Add login system
-- Improve translations
-- Add more resources
-- Clean code structure
-
----
-
-## Final Status
--  Project is functional and ready for demo
-
----
-
-## Challenges Faced
-- Import errors in Flask modules
-- Handling multiple features together
-- Making UI simple for low bandwidth
